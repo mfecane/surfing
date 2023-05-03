@@ -1,0 +1,144 @@
+[gd_scene load_steps=21 format=3 uid="uid://csnx37o0gc4je"]
+
+[ext_resource type="PackedScene" path="res://scenes/import/board.tscn" id="1_8avgh"]
+[ext_resource type="Script" path="res://controls.gd" id="1_67xqw"]
+[ext_resource type="Script" path="res://scripts/state/StateMachine.gd" id="2_7amnv"]
+[ext_resource type="PackedScene" path="res://scenes/import/sail.tscn" id="2_71oyf"]
+[ext_resource type="Script" path="res://scripts/physics.gd" id="2_k463u"]
+[ext_resource type="Script" path="res://scripts/Control.gd" id="2_tqg0q"]
+[ext_resource type="Script" path="res://scripts/state/RidingState.gd" id="3_w41d3"]
+[ext_resource type="PackedScene" path="res://scenes/gui.tscn" id="4_ibb1t"]
+[ext_resource type="Script" path="res://scripts/state/TackingState.gd" id="4_ull8r"]
+[ext_resource type="PackedScene" path="res://scenes/water.tscn" id="5_dolpu"]
+[ext_resource type="Script" path="res://scripts/surfer.gd" id="7_f1vrm"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="8_a5h7g"]
+[ext_resource type="Script" path="res://scripts/state/JibingState.gd" id="9_uq8mp"]
+[ext_resource type="Script" path="res://scripts/state/StartState.gd" id="11_x0mgt"]
+[ext_resource type="Script" path="res://scripts/Debug.gd" id="15_nw0o1"]
+
+[sub_resource type="TextMesh" id="TextMesh_42byf"]
+text = "still"
+
+[sub_resource type="SphereMesh" id="SphereMesh_xvwjy"]
+radius = 0.2
+height = 0.4
+radial_segments = 9
+rings = 8
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pr0ds"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_yx0m6"]
+sky_material = SubResource("ProceduralSkyMaterial_pr0ds")
+
+[sub_resource type="Environment" id="Environment_g3sam"]
+background_mode = 2
+sky = SubResource("Sky_yx0m6")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="world" type="Node3D"]
+script = ExtResource("1_67xqw")
+
+[node name="Control" type="Node" parent="."]
+script = ExtResource("2_tqg0q")
+
+[node name="Physics" type="Node" parent="."]
+script = ExtResource("2_k463u")
+
+[node name="SailAttachment" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.153, 0)
+
+[node name="SailControl" type="Node3D" parent="SailAttachment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.153, 0)
+
+[node name="sail_grp" type="Node3D" parent="SailAttachment/SailControl"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.137674, 0)
+rotation_order = 1
+
+[node name="sail" parent="SailAttachment/SailControl/sail_grp" instance=ExtResource("2_71oyf")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.137674, 0)
+
+[node name="sail_center" type="Node3D" parent="SailAttachment/SailControl/sail_grp"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.790455, 2.14298, 0)
+
+[node name="startPosition" type="Node3D" parent="SailAttachment/SailControl/sail_grp"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.605909, 0, 0)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SailAttachment/SailControl/sail_grp/startPosition"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+mesh = SubResource("TextMesh_42byf")
+skeleton = NodePath("../../../../../board_grp/right_back")
+
+[node name="board_grp" type="Node3D" parent="."]
+
+[node name="board" parent="board_grp" instance=ExtResource("1_8avgh")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="board_center" type="Node3D" parent="board_grp"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.82382, -0.383, 0)
+
+[node name="left_front" type="Node3D" parent="board_grp"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.678, 0, -0.414)
+
+[node name="left_back" type="Node3D" parent="board_grp"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.18076, 0, -0.414258)
+
+[node name="right_front" type="Node3D" parent="board_grp"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.678, 0, 0.414)
+
+[node name="right_back" type="Node3D" parent="board_grp"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.181, 0, 0.414)
+
+[node name="tacking_pos" type="Node3D" parent="board_grp"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.5, 0, 0)
+
+[node name="jibing_pos" type="Node3D" parent="board_grp"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.25857, 0, 0)
+
+[node name="Surfer_placeholder" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_xvwjy")
+skeleton = NodePath("../SailAttachment/SailControl/sail_grp")
+script = ExtResource("7_f1vrm")
+
+[node name="StateMachine" type="Node" parent="Surfer_placeholder"]
+script = ExtResource("2_7amnv")
+initial_state = NodePath("Riding")
+
+[node name="Riding" type="Node" parent="Surfer_placeholder/StateMachine"]
+script = ExtResource("3_w41d3")
+
+[node name="Jibing" type="Node" parent="Surfer_placeholder/StateMachine"]
+script = ExtResource("9_uq8mp")
+
+[node name="Tacking" type="Node" parent="Surfer_placeholder/StateMachine"]
+script = ExtResource("4_ull8r")
+
+[node name="Start" type="Node" parent="Surfer_placeholder/StateMachine"]
+script = ExtResource("11_x0mgt")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+script = ExtResource("8_a5h7g")
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(-0.994703, 0.0776965, -0.0673028, 0, 0.654741, 0.755854, 0.102793, 0.75185, -0.651272, -1.108, 11.288, -7.282)
+fov = 45.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_g3sam")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.7694, -0.534498, 0.349766, 0, 0.547563, 0.836764, -0.638768, 0.643806, -0.421295, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Water" parent="." instance=ExtResource("5_dolpu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.153, 0)
+boardPosition = null
+
+[node name="gui" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_ibb1t")]
+camera = NodePath("../CameraPivot/Camera3D")
+
+[node name="Debug" type="Node2D" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("15_nw0o1")
+camera = NodePath("../CameraPivot/Camera3D")

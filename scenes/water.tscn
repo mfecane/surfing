@@ -1,0 +1,63 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Shader" path="res://shaders/water.gdshader" id="1_31ppl"]
+[ext_resource type="Script" path="res://scripts/water.gd" id="2_py5q4"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_4kxyy"]
+size = Vector2(80, 80)
+subdivide_width = 300
+subdivide_depth = 300
+orientation = 1
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_otx5h"]
+noise_type = 3
+frequency = 0.005
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wbf8x"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_otx5h")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iulse"]
+noise_type = 3
+seed = 10
+frequency = 0.004
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kd1md"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_iulse")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0pyt1"]
+noise_type = 3
+frequency = 0.029
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_eju48"]
+seamless = true
+noise = SubResource("FastNoiseLite_0pyt1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5rj4f"]
+render_priority = 0
+shader = ExtResource("1_31ppl")
+shader_parameter/albedo = Color(0.0666667, 0.215686, 0.317647, 1)
+shader_parameter/metallic = 0.0
+shader_parameter/roughness = 0.02
+shader_parameter/wave_direction = Vector2(1, 1)
+shader_parameter/wave_direction2 = Vector2(-1, -1)
+shader_parameter/time_scale = 0.015
+shader_parameter/noise_scale = 10.0
+shader_parameter/height_scale = 0.15
+shader_parameter/water_scale = 0.1
+shader_parameter/shift = Vector2(-0.994, 0.798)
+shader_parameter/wave = SubResource("NoiseTexture2D_eju48")
+shader_parameter/texture_normal = SubResource("NoiseTexture2D_wbf8x")
+shader_parameter/texture_normal2 = SubResource("NoiseTexture2D_kd1md")
+
+[node name="Water" type="MeshInstance3D"]
+cast_shadow = 0
+mesh = SubResource("QuadMesh_4kxyy")
+surface_material_override/0 = SubResource("ShaderMaterial_5rj4f")
+script = ExtResource("2_py5q4")

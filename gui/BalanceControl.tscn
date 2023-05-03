@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://gui/BalanceControl.gd" id="1_f06l2"]
+[ext_resource type="Texture2D" uid="uid://b4u7ijwypy0yx" path="res://assets/images/wind_outer.png" id="1_jcvdg"]
+[ext_resource type="Script" path="res://scripts/BalanceCenter.gd" id="2_lk31i"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_f06l2")
+
+[node name="ControlPivot" type="Node2D" parent="."]
+position = Vector2(982, 464)
+
+[node name="Circle" type="Sprite2D" parent="ControlPivot"]
+script = ExtResource("2_lk31i")
+
+[node name="Frame" type="Sprite2D" parent="ControlPivot"]
+texture = ExtResource("1_jcvdg")

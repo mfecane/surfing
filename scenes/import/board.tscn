@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" uid="uid://djcaav3nrymil" path="res://assets/models/board.glb" id="1_iymv6"]
+
+[node name="board" instance=ExtResource("1_iymv6")]
