@@ -14,16 +14,11 @@
 [ext_resource type="Script" path="res://scripts/camera.gd" id="8_a5h7g"]
 [ext_resource type="Script" path="res://scripts/state/JibingState.gd" id="9_uq8mp"]
 [ext_resource type="Script" path="res://scripts/state/StartState.gd" id="11_x0mgt"]
+[ext_resource type="PackedScene" uid="uid://dg1oc131p435s" path="res://scenes/surfer.tscn" id="12_fqst5"]
 [ext_resource type="Script" path="res://scripts/Debug.gd" id="15_nw0o1"]
 
 [sub_resource type="TextMesh" id="TextMesh_42byf"]
 text = "still"
-
-[sub_resource type="SphereMesh" id="SphereMesh_xvwjy"]
-radius = 0.2
-height = 0.4
-radial_segments = 9
-rings = 8
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pr0ds"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -71,6 +66,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 mesh = SubResource("TextMesh_42byf")
 skeleton = NodePath("../../../../../board_grp/right_back")
 
+[node name="hand_target" type="Node3D" parent="SailAttachment/SailControl/sail_grp"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.551313, 1.71209, -0.441265)
+
 [node name="board_grp" type="Node3D" parent="."]
 
 [node name="board" parent="board_grp" instance=ExtResource("1_8avgh")]
@@ -97,9 +95,7 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.5, 0
 [node name="jibing_pos" type="Node3D" parent="board_grp"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.25857, 0, 0)
 
-[node name="Surfer_placeholder" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_xvwjy")
-skeleton = NodePath("../SailAttachment/SailControl/sail_grp")
+[node name="Surfer_placeholder" type="Node3D" parent="."]
 script = ExtResource("7_f1vrm")
 
 [node name="StateMachine" type="Node" parent="Surfer_placeholder"]
@@ -118,6 +114,9 @@ script = ExtResource("4_ull8r")
 [node name="Start" type="Node" parent="Surfer_placeholder/StateMachine"]
 script = ExtResource("11_x0mgt")
 
+[node name="simple_surfer" parent="Surfer_placeholder" instance=ExtResource("12_fqst5")]
+transform = Transform3D(1.423, 0, 0, 0, 1.423, 0, 0, 0, 1.423, 0.018, -0.049, -0.537)
+
 [node name="CameraPivot" type="Node3D" parent="."]
 script = ExtResource("8_a5h7g")
 
@@ -134,7 +133,6 @@ shadow_enabled = true
 
 [node name="Water" parent="." instance=ExtResource("5_dolpu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.153, 0)
-boardPosition = null
 
 [node name="gui" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_ibb1t")]
 camera = NodePath("../CameraPivot/Camera3D")

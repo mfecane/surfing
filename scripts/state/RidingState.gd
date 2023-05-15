@@ -8,9 +8,14 @@ class_name RidingState
 @onready var leftFront = $"/root/world/board_grp/left_front"
 @onready var rightFront = $"/root/world/board_grp/right_front"
 @onready var board = $"/root/world/board_grp"
+@onready var handTarget = $"/root/world/SailAttachment/SailControl/sail_grp/hand_target"
+
+@onready var skeletonIk = $"/root/world/Surfer_placeholder/simple_surfer/Armature/Skeleton3D/SkeletonIK3D"
 
 func enter(): # override
 	physics.attachSail = true
+	skeletonIk.target_node = handTarget.get_path()
+	skeletonIk.start()
 	
 func update(delta: float):
 	physics.boardPhysics.userControlMomentumX = 0.0

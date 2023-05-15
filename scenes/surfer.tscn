@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://dg1oc131p435s"]
+
+[ext_resource type="PackedScene" uid="uid://cd8erd4nx3c45" path="res://assets/models/simple_surfer.glb" id="1_x0u7t"]
+
+[node name="simple_surfer" instance=ExtResource("1_x0u7t")]
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/0/position = Vector3(-4.12192e-18, 0.669209, -0.292565)
+bones/6/rotation = Quaternion(0.233026, -0.383896, -0.63312, 0.630461)
+bones/7/rotation = Quaternion(0.180856, -0.0604795, -0.150049, 0.970113)
+bones/8/rotation = Quaternion(-0.101203, 0.839512, 0.139226, 0.515358)
+bones/10/rotation = Quaternion(0.233026, 0.383896, 0.63312, 0.630461)
+bones/11/rotation = Quaternion(0.180856, 0.0604796, 0.150049, 0.970113)
+bones/12/rotation = Quaternion(-0.101203, -0.839512, -0.139225, 0.515358)
+bones/14/rotation = Quaternion(0.391449, -0.308033, -0.252902, 0.829412)
+bones/15/rotation = Quaternion(-0.547545, -0.009782, -0.0894216, 0.831927)
+bones/16/rotation = Quaternion(0.671698, 0.109203, 0.0541095, 0.730732)
+bones/18/rotation = Quaternion(0.391448, 0.308033, 0.252902, 0.829412)
+bones/19/rotation = Quaternion(-0.547545, 0.00978208, 0.0894224, 0.831927)
+bones/20/rotation = Quaternion(0.671697, -0.109203, -0.0541099, 0.730732)
+
+[node name="SkeletonIK3D" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="1"]
+process_priority = 1
+root_bone = &"upper_arm.R"
+tip_bone = &"hand.R"
+target_node = NodePath("../../../rightHand")
+
+[node name="SkeletonIK3D2" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="2"]
+process_priority = 1
+root_bone = &"neck"
+tip_bone = &"head"
+target_node = NodePath("../../../head_test")
+
+[node name="rightHand" type="Node3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.399924, 1.12154, 0.280568)
+
+[node name="head_test" type="Node3D" parent="." index="3"]
+transform = Transform3D(0.5, 0, -0.866026, 0, 1, 0, 0.866025, 0, 0.5, 0, 1.61713, -0.255106)

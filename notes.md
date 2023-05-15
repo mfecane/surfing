@@ -4,11 +4,11 @@
 
 -   add surfer model and animations
 -   update visuals
-    -   add water trail
-    -   update models/add materials
-    -   add shelf
-    -   add corals
-    -   add fish
+	-   add water trail
+	-   update models/add materials
+	-   add shelf
+	-   add corals
+	-   add fish
 -   add balance again
 -   tweak controls
 -   add controls gui
