@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://csnx37o0gc4je"]
+[gd_scene load_steps=22 format=3 uid="uid://b20saphvo58hg"]
 
 [ext_resource type="PackedScene" path="res://scenes/import/board.tscn" id="1_8avgh"]
 [ext_resource type="Script" path="res://controls.gd" id="1_67xqw"]
@@ -9,12 +9,13 @@
 [ext_resource type="Script" path="res://scripts/state/RidingState.gd" id="3_w41d3"]
 [ext_resource type="PackedScene" path="res://scenes/gui.tscn" id="4_ibb1t"]
 [ext_resource type="Script" path="res://scripts/state/TackingState.gd" id="4_ull8r"]
+[ext_resource type="ArrayMesh" uid="uid://bnft1qan2768w" path="res://art/arrow.obj" id="5_do2uv"]
 [ext_resource type="PackedScene" path="res://scenes/water.tscn" id="5_dolpu"]
 [ext_resource type="Script" path="res://scripts/surfer.gd" id="7_f1vrm"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="8_a5h7g"]
 [ext_resource type="Script" path="res://scripts/state/JibingState.gd" id="9_uq8mp"]
 [ext_resource type="Script" path="res://scripts/state/StartState.gd" id="11_x0mgt"]
-[ext_resource type="PackedScene" uid="uid://dg1oc131p435s" path="res://scenes/surfer.tscn" id="12_fqst5"]
+[ext_resource type="PackedScene" uid="uid://d0jgmpv4eisap" path="res://scenes/surfer.tscn" id="12_fqst5"]
 [ext_resource type="Script" path="res://scripts/Debug.gd" id="15_nw0o1"]
 
 [sub_resource type="TextMesh" id="TextMesh_42byf"]
@@ -66,8 +67,51 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 mesh = SubResource("TextMesh_42byf")
 skeleton = NodePath("../../../../../board_grp/right_back")
 
-[node name="hand_target" type="Node3D" parent="SailAttachment/SailControl/sail_grp"]
+[node name="handTargetLeft1" type="Node3D" parent="SailAttachment/SailControl/sail_grp"]
+transform = Transform3D(-0.939693, -0.34202, 1.49502e-08, 0, -4.37114e-08, -1, 0.34202, -0.939693, 4.10753e-08, -0.167, 1.712, 0.396)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SailAttachment/SailControl/sail_grp/handTargetLeft1"]
+transform = Transform3D(0.118, 0, 0, 0, -5.15794e-09, -0.118, 0, 0.118, -5.15794e-09, 0, 0.12, 0)
+mesh = ExtResource("5_do2uv")
+skeleton = NodePath("../../handTargetRight2")
+
+[node name="handTargetLeft2" type="Node3D" parent="SailAttachment/SailControl/sail_grp"]
+transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, -0.551, 1.712, 0.441)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SailAttachment/SailControl/sail_grp/handTargetLeft2"]
+transform = Transform3D(0.118, 0, 0, 0, -5.15794e-09, -0.118, 0, 0.118, -5.15794e-09, 0, 0.120431, 0)
+mesh = ExtResource("5_do2uv")
+
+[node name="handTargetLeft3" type="Node3D" parent="SailAttachment/SailControl/sail_grp"]
+transform = Transform3D(-0.965926, 0.258819, -1.13133e-08, 0, -4.37114e-08, -1, -0.258819, -0.965926, 4.2222e-08, -1.958, 1.37, 0.248)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SailAttachment/SailControl/sail_grp/handTargetLeft3"]
+transform = Transform3D(0.118, 0, 0, 0, -5.15794e-09, -0.118, 0, 0.118, -5.15794e-09, 0, 0.12, -0.163)
+mesh = ExtResource("5_do2uv")
+skeleton = NodePath("../../handTargetRight2")
+
+[node name="handTargetRight1" type="Node3D" parent="SailAttachment/SailControl/sail_grp"]
+transform = Transform3D(0.939693, -0.34202, 1.49502e-08, 0, -4.37114e-08, -1, 0.34202, 0.939693, -4.10753e-08, -0.166883, 1.71209, -0.396194)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SailAttachment/SailControl/sail_grp/handTargetRight1"]
+transform = Transform3D(0.118, 0, 0, 0, -5.15794e-09, -0.118, 0, 0.118, -5.15794e-09, 0, 0.12, 0)
+mesh = ExtResource("5_do2uv")
+skeleton = NodePath("../../handTargetRight2")
+
+[node name="handTargetRight2" type="Node3D" parent="SailAttachment/SailControl/sail_grp"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.551313, 1.71209, -0.441265)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SailAttachment/SailControl/sail_grp/handTargetRight2"]
+transform = Transform3D(0.118, 0, 0, 0, -5.15794e-09, -0.118, 0, 0.118, -5.15794e-09, 0, 0.120431, 0)
+mesh = ExtResource("5_do2uv")
+
+[node name="handTargetRight3" type="Node3D" parent="SailAttachment/SailControl/sail_grp"]
+transform = Transform3D(0.965926, 0.258819, -1.13133e-08, 0, -4.37114e-08, -1, -0.258819, 0.965926, -4.2222e-08, -1.95822, 1.36996, -0.232702)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SailAttachment/SailControl/sail_grp/handTargetRight3"]
+transform = Transform3D(0.118, 0, 0, 0, -5.15794e-09, -0.118, 0, 0.118, -5.15794e-09, 0, 0.12, -0.163)
+mesh = ExtResource("5_do2uv")
+skeleton = NodePath("../../handTargetRight2")
 
 [node name="board_grp" type="Node3D" parent="."]
 
@@ -78,25 +122,29 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.82382, -0.383, 0)
 
 [node name="left_front" type="Node3D" parent="board_grp"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.678, 0, -0.414)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.048, 0, -0.414)
 
 [node name="left_back" type="Node3D" parent="board_grp"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.18076, 0, -0.414258)
 
 [node name="right_front" type="Node3D" parent="board_grp"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.678, 0, 0.414)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.0484906, 0, 0.414)
 
 [node name="right_back" type="Node3D" parent="board_grp"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.181, 0, 0.414)
 
 [node name="tacking_pos" type="Node3D" parent="board_grp"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.5, 0, 0)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.23153, 0, 0)
 
 [node name="jibing_pos" type="Node3D" parent="board_grp"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.25857, 0, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.862276, 0, 0)
 
 [node name="Surfer_placeholder" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.693761, 0, -0.309578)
 script = ExtResource("7_f1vrm")
+
+[node name="simple_surfer" parent="Surfer_placeholder" instance=ExtResource("12_fqst5")]
+transform = Transform3D(1.423, 0, 0, 0, 1.423, 0, 0, 0, 1.423, 0.018, -0.049, -0.214698)
 
 [node name="StateMachine" type="Node" parent="Surfer_placeholder"]
 script = ExtResource("2_7amnv")
@@ -114,14 +162,11 @@ script = ExtResource("4_ull8r")
 [node name="Start" type="Node" parent="Surfer_placeholder/StateMachine"]
 script = ExtResource("11_x0mgt")
 
-[node name="simple_surfer" parent="Surfer_placeholder" instance=ExtResource("12_fqst5")]
-transform = Transform3D(1.423, 0, 0, 0, 1.423, 0, 0, 0, 1.423, 0.018, -0.049, -0.537)
-
 [node name="CameraPivot" type="Node3D" parent="."]
 script = ExtResource("8_a5h7g")
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(-0.994703, 0.0776965, -0.0673028, 0, 0.654741, 0.755854, 0.102793, 0.75185, -0.651272, -1.108, 11.288, -7.282)
+transform = Transform3D(-0.994703, 0.0674379, -0.0775784, 0, 0.75471, 0.656059, 0.102792, 0.652584, -0.750712, -1.108, 8.487, -7.282)
 fov = 45.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

@@ -9,6 +9,7 @@ class_name TackingState
 @onready var tackingPosition = $"/root/world/board_grp/tacking_pos"
 @onready var board = $"/root/world/board_grp"
 @onready var sailControl = $"/root/world/SailAttachment/SailControl"
+@onready var surferAnimator = $"/root/world/Surfer_placeholder/simple_surfer/SurferAnimator"
 
 const ADJUST_SAIL_ANGLE = PI / 6.0
 
@@ -29,6 +30,8 @@ func enter(): # override
 		newSurferPosition = leftFront
 	else:
 		newSurferPosition = rightFront
+
+	surferAnimator.handleTackingState()
 	
 func update(delta: float):
 	#? switch to start position if failed
@@ -41,7 +44,7 @@ func update(delta: float):
 		
 	sailControl.rotation.y = startSailAngle + process * ADJUST_SAIL_ANGLE * Global.surferSide
 
-	process += delta * 2.0
+	process += delta
 
 	if process > 1.0:
 		stateMachine.switchState('Riding')

@@ -8,14 +8,23 @@ class_name RidingState
 @onready var leftFront = $"/root/world/board_grp/left_front"
 @onready var rightFront = $"/root/world/board_grp/right_front"
 @onready var board = $"/root/world/board_grp"
-@onready var handTarget = $"/root/world/SailAttachment/SailControl/sail_grp/hand_target"
+@onready var rightArmIk = $"/root/world/Surfer_placeholder/simple_surfer/Armature/Skeleton3D/RightArmIk"
+@onready var leftArmIk = $"/root/world/Surfer_placeholder/simple_surfer/Armature/Skeleton3D/LeftArmIk"
 
-@onready var skeletonIk = $"/root/world/Surfer_placeholder/simple_surfer/Armature/Skeleton3D/SkeletonIK3D"
+
+@onready var surferAnimator = $"/root/world/Surfer_placeholder/simple_surfer/SurferAnimator"
+
+@onready var handTargetRight1 = $"/root/world/SailAttachment/SailControl/sail_grp/handTargetRight1"
+@onready var handTargetRight2 = $"/root/world/SailAttachment/SailControl/sail_grp/handTargetRight2"
+
+@onready var handTargetLeft1 = $"/root/world/SailAttachment/SailControl/sail_grp/handTargetLeft1"
+@onready var handTargetLeft2 = $"/root/world/SailAttachment/SailControl/sail_grp/handTargetLeft2"
+
 
 func enter(): # override
 	physics.attachSail = true
-	skeletonIk.target_node = handTarget.get_path()
-	skeletonIk.start()
+	updateSurferHands()
+	surferAnimator.handleSurfState()
 	
 func update(delta: float):
 	physics.boardPhysics.userControlMomentumX = 0.0
@@ -32,10 +41,10 @@ func update(delta: float):
 	surfer.transform = surfer.transform.interpolate_with(surferPosition, delta)
 	
 	# TODO fix this shit
-	if absf(fmod(sailPivotNode.rotation.y, PI/2)) < 0.1 && \
-		physics.boardKinematics.boardSpeed.length() < 0.05:
-		stateMachine.switchState('Start')
-		return
+	# if absf(fmod(sailPivotNode.rotation.y, PI/2)) < 0.1 && \
+	# 	physics.boardKinematics.boardSpeed.length() < 0.05:
+	# 	stateMachine.switchState('Start')
+	# 	return
 	
 	if board.transform.basis.x.dot(physics.windDirection) < 0 && \
 		Global.surferSide != Global.windSide:
@@ -46,5 +55,21 @@ func update(delta: float):
 		Global.surferSide != Global.windSide:
 		stateMachine.switchState('Jibing')
 
+func updateSurferHands():
+
+	if Global.surferSide == Side.LEFT:
+		leftArmIk.target_node = handTargetRight1.get_path()
+		leftArmIk.start()
+		rightArmIk.target_node = handTargetRight2.get_path()
+		rightArmIk.start()
+
+	if Global.surferSide == Side.RIGHT:
+		leftArmIk.target_node = handTargetLeft2.get_path()
+		leftArmIk.start()
+		rightArmIk.target_node = handTargetLeft1.get_path()
+		rightArmIk.start()
+
 func exit(): # override
 	physics.attachSail = true
+	leftArmIk.stop()
+	rightArmIk.stop()

@@ -9,6 +9,7 @@ class_name JibingState
 @onready var jibingPosition = $"/root/world/board_grp/jibing_pos"
 @onready var board = $"/root/world/board_grp"
 @onready var sailControl = $"/root/world/SailAttachment/SailControl"
+@onready var surferAnimator = $"/root/world/Surfer_placeholder/simple_surfer/SurferAnimator"
 
 const FLIP_SAIL_ANGLE = 3.0 * PI / 2.0
 
@@ -26,6 +27,8 @@ func enter(): # override
 		newSurferPosition = leftFront
 	else:
 		newSurferPosition = rightFront
+
+	surferAnimator.handleJibingState()
 	
 func update(delta: float):
 	#? switch to start position if failed
@@ -37,7 +40,7 @@ func update(delta: float):
 		surfer.transform = surfer.transform.interpolate_with(newSurferPosition.global_transform, (process - 0.5) * 2.0)
 		
 	sailControl.rotation.y = startSailAngle - process * FLIP_SAIL_ANGLE * Global.surferSide
-	process += delta * 2.0
+	process += delta * 0.5
 
 	if process > 1.0:
 		stateMachine.switchState('Riding')
