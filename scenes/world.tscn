@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b20saphvo58hg"]
+[gd_scene load_steps=23 format=3 uid="uid://b20saphvo58hg"]
 
 [ext_resource type="PackedScene" path="res://scenes/import/board.tscn" id="1_8avgh"]
 [ext_resource type="Script" path="res://controls.gd" id="1_67xqw"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://scripts/state/StartState.gd" id="11_x0mgt"]
 [ext_resource type="PackedScene" uid="uid://d0jgmpv4eisap" path="res://scenes/surfer.tscn" id="12_fqst5"]
 [ext_resource type="Script" path="res://scripts/Debug.gd" id="15_nw0o1"]
+[ext_resource type="PackedScene" uid="uid://hsgeswskgy1d" path="res://scenes/WaterSimulation.tscn" id="16_rh0om"]
 
 [sub_resource type="TextMesh" id="TextMesh_42byf"]
 text = "still"
@@ -167,6 +168,7 @@ script = ExtResource("8_a5h7g")
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(-0.994703, 0.0642703, -0.0802224, 0, 0.780431, 0.625243, 0.102792, 0.621931, -0.776296, -1.4, 9.225, -7.282)
+cull_mask = 524287
 fov = 45.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -178,6 +180,9 @@ shadow_enabled = true
 
 [node name="Water" parent="." instance=ExtResource("5_dolpu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.153, 0)
+visible = false
+
+[node name="main" parent="." instance=ExtResource("16_rh0om")]
 
 [node name="gui" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("4_ibb1t")]
 camera = NodePath("../CameraPivot/Camera3D")

@@ -1,0 +1,100 @@
+[gd_scene load_steps=13 format=3 uid="uid://hsgeswskgy1d"]
+
+[ext_resource type="Script" path="res://scripts/WaterSimulation.gd" id="1_lm044"]
+[ext_resource type="Shader" path="res://shaders/WaterSimulation.gdshader" id="1_yeseo"]
+[ext_resource type="Shader" path="res://shaders/WaterTest.gdshader" id="3_budxa"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p3nl5"]
+resource_local_to_scene = true
+shader = ExtResource("1_yeseo")
+shader_parameter/phase = 0.2
+shader_parameter/attenuation = 0.999
+shader_parameter/deltaUV = 3.0
+
+[sub_resource type="Environment" id="Environment_5hc64"]
+background_mode = 1
+ambient_light_source = 1
+reflected_light_source = 1
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_c0cto"]
+viewport_path = NodePath("Simulation")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d6oil"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("3_budxa")
+shader_parameter/simulationTexture = SubResource("ViewportTexture_c0cto")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i3t8i"]
+material = SubResource("ShaderMaterial_d6oil")
+size = Vector2(80, 80)
+subdivide_width = 1000
+subdivide_depth = 1000
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rcq0o"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nx5fw"]
+material = SubResource("StandardMaterial3D_rcq0o")
+size = Vector3(3, 3, 3)
+
+[sub_resource type="Animation" id="Animation_nprmc"]
+resource_name = "new_animation"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 4.769, 0, 1, 1, 0, -2.366, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1mltb"]
+_data = {
+"new_animation": SubResource("Animation_nprmc")
+}
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_lm044")
+
+[node name="Simulation" type="SubViewport" parent="."]
+size = Vector2i(514, 514)
+render_target_clear_mode = 2
+render_target_update_mode = 4
+
+[node name="ColorRect" type="ColorRect" parent="Simulation"]
+material = SubResource("ShaderMaterial_p3nl5")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Collision" type="SubViewport" parent="."]
+
+[node name="CollisionCamera" type="Camera3D" parent="Collision"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -5, 0)
+keep_aspect = 0
+cull_mask = 524288
+environment = SubResource("Environment_5hc64")
+projection = 1
+current = true
+size = 80.0
+near = 0.001
+far = 5.0
+
+[node name="Water" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_i3t8i")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.81437, 0)
+layers = 524288
+mesh = SubResource("BoxMesh_nx5fw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MeshInstance3D"]
+autoplay = "new_animation"
+libraries = {
+"": SubResource("AnimationLibrary_1mltb")
+}
