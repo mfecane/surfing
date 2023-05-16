@@ -1,7 +1,9 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=15 format=3 uid="uid://cqxojmq1m10qw"]
 
 [ext_resource type="Shader" path="res://shaders/water.gdshader" id="1_31ppl"]
 [ext_resource type="Script" path="res://scripts/water.gd" id="2_py5q4"]
+[ext_resource type="Texture2D" uid="uid://dblafom307twf" path="res://assets/textures/Sand_basecolor.png" id="3_05hqo"]
+[ext_resource type="Texture2D" uid="uid://k2nay2aqve8k" path="res://assets/textures/Sand_normal.png" id="4_be8o8"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_4kxyy"]
 size = Vector2(80, 80)
@@ -42,7 +44,7 @@ noise = SubResource("FastNoiseLite_0pyt1")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5rj4f"]
 render_priority = 0
 shader = ExtResource("1_31ppl")
-shader_parameter/albedo = Color(0.0666667, 0.215686, 0.317647, 1)
+shader_parameter/surface_color = Color(0.164706, 0.564706, 0.870588, 1)
 shader_parameter/metallic = 0.0
 shader_parameter/roughness = 0.02
 shader_parameter/wave_direction = Vector2(1, 1)
@@ -52,12 +54,30 @@ shader_parameter/noise_scale = 10.0
 shader_parameter/height_scale = 0.15
 shader_parameter/water_scale = 0.1
 shader_parameter/shift = Vector2(-0.994, 0.798)
+shader_parameter/color_deep = Color(0.0666667, 0.0901961, 0.290196, 1)
+shader_parameter/color_shallow = Color(0.0745098, 0.705882, 0.847059, 1)
+shader_parameter/beers_law = 2.0
+shader_parameter/depth_offset = -0.75
 shader_parameter/wave = SubResource("NoiseTexture2D_eju48")
 shader_parameter/texture_normal = SubResource("NoiseTexture2D_wbf8x")
 shader_parameter/texture_normal2 = SubResource("NoiseTexture2D_kd1md")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8idtt"]
+albedo_texture = ExtResource("3_05hqo")
+normal_enabled = true
+normal_texture = ExtResource("4_be8o8")
+uv1_scale = Vector3(10, 10, 10)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1ulk7"]
+material = SubResource("StandardMaterial3D_8idtt")
+size = Vector2(120, 120)
 
 [node name="Water" type="MeshInstance3D"]
 cast_shadow = 0
 mesh = SubResource("QuadMesh_4kxyy")
 surface_material_override/0 = SubResource("ShaderMaterial_5rj4f")
 script = ExtResource("2_py5q4")
+
+[node name="floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -11, 0)
+mesh = SubResource("PlaneMesh_1ulk7")

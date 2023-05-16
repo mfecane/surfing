@@ -29,7 +29,7 @@ func handleTackingState():
 
 func handleJibingState():
 	if Global.surferSide == Side.LEFT:
-		jibingNode.play_mode = 0
-	else:
 		jibingNode.play_mode = 1
+	else:
+		jibingNode.play_mode = 0
 	animationPlayback.travel('jibing')

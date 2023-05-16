@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" path="res://scenes/gui.tscn" id="4_ibb1t"]
 [ext_resource type="Script" path="res://scripts/state/TackingState.gd" id="4_ull8r"]
 [ext_resource type="ArrayMesh" uid="uid://bnft1qan2768w" path="res://art/arrow.obj" id="5_do2uv"]
-[ext_resource type="PackedScene" path="res://scenes/water.tscn" id="5_dolpu"]
+[ext_resource type="PackedScene" uid="uid://cqxojmq1m10qw" path="res://scenes/water.tscn" id="5_dolpu"]
 [ext_resource type="Script" path="res://scripts/surfer.gd" id="7_f1vrm"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="8_a5h7g"]
 [ext_resource type="Script" path="res://scripts/state/JibingState.gd" id="9_uq8mp"]
@@ -166,14 +166,14 @@ script = ExtResource("11_x0mgt")
 script = ExtResource("8_a5h7g")
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(-0.994703, 0.0674379, -0.0775784, 0, 0.75471, 0.656059, 0.102792, 0.652584, -0.750712, -1.108, 8.487, -7.282)
+transform = Transform3D(-0.994703, 0.0642703, -0.0802224, 0, 0.780431, 0.625243, 0.102792, 0.621931, -0.776296, -1.4, 9.225, -7.282)
 fov = 45.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_g3sam")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.7694, -0.534498, 0.349766, 0, 0.547563, 0.836764, -0.638768, 0.643806, -0.421295, 0, 0, 0)
+transform = Transform3D(-0.802707, -0.291873, 0.520068, 0.121101, 0.774109, 0.621361, -0.583948, 0.561752, -0.586037, 0, 0, 0)
 shadow_enabled = true
 
 [node name="Water" parent="." instance=ExtResource("5_dolpu")]
